@@ -1,60 +1,69 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
 
 export const Mid = ({ show }: { show: boolean }) => {
   return (
-    <Wrapper style={{ display: show ? "flex" : "none" }}>
-      {/* Серый фон-бэкграунд под всем */}
-      <BackgroundLayer />
-      {/* Абсолютный блок с логотипами (z-index меньше чем у главного) */}
-      <AbsoluteBlock>
-        <LogoTop src="/midlogo1.png" alt="Логотип 1" />
-        <BottomWrapper>
-          <LogoBottom src="/midlogo2.png" alt="Логотип 2" />
-          <LogoText>amfr.ru</LogoText>
-        </BottomWrapper>
-      </AbsoluteBlock>
+    <>
+      <BackgroundLayer /> {/* фон всегда под всем */}
+      {show && (
+        <AnimatedWrapper>
+          {/* Абсолютный блок с логотипами (z-index меньше чем у главного) */}
+          <AbsoluteBlock>
+            <LogoTop src="/midlogo1.png" alt="Логотип 1" />
+            <BottomWrapper>
+              <LogoBottom src="/midlogo2.png" alt="Логотип 2" />
+              <LogoText>amfr.ru</LogoText>
+            </BottomWrapper>
+          </AbsoluteBlock>
 
-      {/* Главный блок */}
-      <MainBlock>
-        <Header>СПОРТМАСТЕРPRO - ГОРОДСКАЯ ЛИГА. ВСЕРОССИЙСКИЙ ФИНАЛ.</Header>
+          {/* Главный блок */}
+          <MainBlock>
+            <Header>СПОРТМАСТЕРPRO - ГОРОДСКАЯ ЛИГА. ВСЕРОССИЙСКИЙ ФИНАЛ.</Header>
 
-        <LogosContainer>
-          <ImageTeam src="/comand-1.png" alt="Газпром-Югра" />
-          <ImageTeam src="/comand-2.png" alt="Торпедо" />
-        </LogosContainer>
+            <LogosContainer>
+              <ImageTeam src="/comand-1.png" alt="Газпром-Югра" />
+              <ImageTeam src="/comand-2.png" alt="Торпедо" />
+            </LogosContainer>
 
-        <MatchEnded>МАТЧ ОКОНЧЕН</MatchEnded>
+            <MatchEnded>МАТЧ ОКОНЧЕН</MatchEnded>
 
-        <TeamsRow>
-          <Driver />
-          <TeamBox side="left">
-            <TeamName side="left">ГАЗПРОМ-ЮГРА</TeamName>
-            <Score side="left">5</Score>
-          </TeamBox>
+            <TeamsRow>
+              <Driver />
+              <TeamBox side="left">
+                <TeamName side="left">ГАЗПРОМ-ЮГРА</TeamName>
+                <Score side="left">5</Score>
+              </TeamBox>
 
-          <TeamBox side="right">
-            <Score side="right">2</Score>
-            <TeamName side="right">ТОРПЕДО</TeamName>
-          </TeamBox>
-        </TeamsRow>
+              <TeamBox side="right">
+                <Score side="right">2</Score>
+                <TeamName side="right">ТОРПЕДО</TeamName>
+              </TeamBox>
+            </TeamsRow>
 
-        <SeriesScore>СЧЕТ В СЕРИИ 2-0</SeriesScore>
-      </MainBlock>
-    </Wrapper>
+            <SeriesScore>СЧЕТ В СЕРИИ 2-0</SeriesScore>
+          </MainBlock>
+        </AnimatedWrapper>
+      )}
+    </>
   );
 };
 
-// Стилизация
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #060f2d;
+const slideDown = keyframes`
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 `;
 
+
+// Фон, который всегда на месте
 const BackgroundLayer = styled.div`
-  position: absolute;
+  position: fixed; /* или absolute, в зависимости от задачи */
   top: 0;
   left: 0;
   width: 100%;
@@ -62,6 +71,18 @@ const BackgroundLayer = styled.div`
   background: rgb(151, 155, 170);
   z-index: 0;
 `;
+
+// Анимируемый контейнер с контентом
+const AnimatedWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  animation: ${slideDown} 0.6s ease-out forwards;
+  z-index: 0; /* чтобы быть поверх фона */
+`;
+
+// Остальной CSS без изменений
 
 const AbsoluteBlock = styled.div`
   position: absolute;

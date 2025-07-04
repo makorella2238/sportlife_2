@@ -1,6 +1,6 @@
 import { useMatch } from "@/hooks";
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const HomeRoster = ({ show }: { show: boolean }) => {
   const match = useMatch();
@@ -31,7 +31,7 @@ export const HomeRoster = ({ show }: { show: boolean }) => {
         <ContentWrapper>
           <GridWrapper>
             {players.map((player, i) => (
-              <PlayerBlock key={`player-${i}`}>
+              <PlayerBlock key={`player-${i}`} index={i}>
                 <RightInfo>
                   <NumberBlock>{player.player_number}</NumberBlock>
                   <NameBlock>{player.player_fio}</NameBlock>
@@ -57,22 +57,47 @@ export const HomeRoster = ({ show }: { show: boolean }) => {
   );
 };
 
-// Стилизация
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #060f2d;
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 `;
 
+const slideDown = keyframes`
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+// Фон, который всегда на месте
 const BackgroundLayer = styled.div`
-  position: absolute;
+  position: fixed; /* или absolute, в зависимости от задачи */
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgb(151, 155, 170);
   z-index: 0;
+`;
+
+// Стилизация
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #060f2d;
+
+    animation: ${slideDown} 0.6s ease-out forwards;
 `;
 
 const ContentWrapper = styled.div`
@@ -174,7 +199,7 @@ const GridWrapper = styled.div`
   margin-bottom: 34px;
 `;
 
-const PlayerBlock = styled.div`
+const PlayerBlock = styled.div<{ index: number }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -182,6 +207,10 @@ const PlayerBlock = styled.div`
   background: linear-gradient(90deg, #001034 0%, #00217e 51%, #000f3a 100%);
   box-sizing: border-box;
   margin-left: 0;
+
+  opacity: 0;
+  animation: ${fadeInUp} 0.6s ease-out forwards;
+  animation-delay: ${({ index }) => index * 0.1}s;
 `;
 
 const RightInfo = styled.div`
