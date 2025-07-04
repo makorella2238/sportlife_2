@@ -1,332 +1,273 @@
-"use client";
-
-import styled, { keyframes } from "styled-components";
 import { useMatch } from "@/hooks";
-import { projectShutdown } from "next/dist/build/swc/generated-native";
+import React from "react";
+import styled from "styled-components";
+
 export const AwayRoster = ({ show }: { show: boolean }) => {
   const match = useMatch();
   const players = match?.results_2?.slice(0, 11) || [];
   const teamName = match?.team_2?.name || "";
 
-  return (
-    <Container style={{ display: show ? "flex" : "none" }}>
-      <Wrapper>
-        <BackgroundImage />
-        <Mach1 src="/sostimg.png" />
-        <Mach2Blur src="/sostimgblur.png" />
-        <Header>
-          <TitleContainer>
-            <TitleLine>{teamName}</TitleLine>
-          </TitleContainer>
-          <TeamsContainer>
-            <TourText>СОСТАВ</TourText>
-          </TeamsContainer>
-        </Header>
+  // Пример данных для тренера и представителя (подставь реальные)
+  const coach = match?.team_1.coaches[0] || { fio: "Иванов Иван Иванович" };
+  const representative = match?.team_1.representativs[0] || {
+    fio: "Петров Пётр Петрович",
+  };
 
-        <Row>
+  return (
+    <Wrapper style={{ display: show ? "flex" : "none" }}>
+      <BackgroundLayer />
+      <AbsoluteBlock>
+        <LogoTop src="/midlogo1.png" alt="Логотип 1" />
+        <BottomWrapper>
+          <LogoBottom src="/midlogo2.png" alt="Логотип 2" />
+          <LogoText>amfr.ru</LogoText>
+        </BottomWrapper>
+      </AbsoluteBlock>
+
+      <MainBlock>
+        <TeamLogo src="/comand-1.png" alt="Логотип команды" />
+        <Header> {teamName} СОСТАВ</Header>
+
+        <ContentWrapper>
           <GridWrapper>
-              {players.map((player, i) => (
-              <PlayerBlock key={i} delay={i * 0.12}>
-                <NumberBox>{player.player_number}</NumberBox>
-                <NameBlock>{player.player_fio}</NameBlock>
-                <RightImage src="/sostpers.png" />
+            {players.map((player, i) => (
+              <PlayerBlock key={`player-${i}`}>
+                <RightInfo>
+                  <NumberBlock>{player.player_number}</NumberBlock>
+                  <NameBlock>{player.player_fio}</NameBlock>
+                </RightInfo>
+                <LeftImage src="/persost.png" />
               </PlayerBlock>
             ))}
           </GridWrapper>
-        </Row>
 
-        <Trener>
-          <TrenerBlock>
-            <TrName>{match?.team_1?.coaches[0].fio}</TrName>
-            <RightImage src="/sostpers.png" />
-            <Dolzhost>ТРЕНЕР</Dolzhost>
-          </TrenerBlock>
-          <TrenerBlock>
-            <TrName>{match?.team_1?.representativs[0].fio}</TrName>
-            <RightImage src="/sostpers.png" />
-
-            <Dolzhost>представитель</Dolzhost>
-          </TrenerBlock>
-        </Trener>
-      </Wrapper>
-    </Container>
+          <RightColumn>
+            <InfoBlock>
+              <Title>Главный тренер</Title>
+              <Fio>{coach.fio}</Fio>
+            </InfoBlock>
+            <InfoBlock>
+              <Title>Представитель</Title>
+              <Fio>{representative.fio}</Fio>
+            </InfoBlock>
+          </RightColumn>
+        </ContentWrapper>
+      </MainBlock>
+    </Wrapper>
   );
 };
 
-const slideDown = keyframes`
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+// Стилизация
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #060f2d;
 `;
 
-
-const fadeInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const Container = styled.div`
-  text-color: #fff;
-  width: 1720px;
-  height: 820px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const animatedGradient = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
-
-const BackgroundImage = styled.div`
+const BackgroundLayer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/sostbg.png") no-repeat center center / cover;
-  background-size: 200% 200%;
-  animation: ${animatedGradient} 25s linear infinite;
-  z-index: 4; /* Убедись, что ниже, чем всё остальное */
+  background: rgb(151, 155, 170);
+  z-index: 0;
 `;
 
-const Header = styled.div`
+const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-
-const TitleContainer = styled.div`
-  position: relative;
-  width: 1012px;
-  padding: 20px 35px;
-  border-radius: 0 0 24px 24px;
-  background: #FFFFFF;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 6;
-  position: relative;
-  clip-path: polygon(10% 100%, 90% 100%, 100% 0, 0 0);
-`;
-
-const TitleLine = styled.div`
-  font-weight: 400;
-  font-size: 56px;
-  line-height: 70px;
-  letter-spacing: -2%;
-  text-align: center;
-  color: #090E5D;
-  text-transform: uppercase;
-`;
-
-const TourText = styled.div`
-  height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 37px;
-  font-weight: 400;
-  color: #fff;
+  padding: 0 40px;
+  box-sizing: border-box;
+  gap: 20px;
+`;
+
+const AbsoluteBlock = styled.div`
+  position: absolute;
+  top: 51%;
+  left: 50%;
+  transform: translate(-88%, -50%);
+  width: 943px;
+  height: 941px;
+  z-index: 3;
+  background: url("/bgabloutemid.png") no-repeat center center / cover;
+`;
+
+const LogoTop = styled.img`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  max-height: 80px;
+`;
+
+const LogoBottom = styled.img`
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  max-height: 80px;
+`;
+
+const MainBlock = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1388px;
+  height: 888px;
+  background: url("/midbg.png") no-repeat center center / cover;
+  box-sizing: border-box;
+  z-index: 6;
+`;
+
+const Header = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
+  width: 580px;
+  height: 62px;
+  text-align: center;
+  margin: 0; /* убрали нижний margin */
   text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(
+    90deg,
+    #b97800 0%,
+    #e5a01f 24.2%,
+    #e29602 55.5%,
+    #e5a01f 81.8%,
+    #b97802 100%
+  );
+  color: #fff;
+  line-height: 62px;
+  margin-bottom: 100px;
 `;
 
-const Trener = styled.div`
-  margin: 0 120px;
+const BottomWrapper = styled.div`
+  position: absolute;
+  bottom: 200px; /* Прижать снизу с отступом */
+  left: 20px; /* По левому краю, как у LogoBottom */
   display: flex;
-  gap: 20px; /* исправлено */
-  margin-top: 30px;
-  margin-bottom: 32px;
-  justify-content: center; /* Центрирование */
-  z-index: 9999;
-  position: relative;
+  flex-direction: column;
+  align-items: flex-start; /* Чтобы текст и лого были слева */
+  gap: 8px; /* Отступ между логотипом и текстом */
 `;
 
-const TeamsContainer = styled.div`
-  width: 388px;
-  height: 49px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 5px;
-  z-index: 5;
-  clip-path: polygon(10% 100%, 90% 100%, 100% 0, 0 0);
-  background: #015963;
-  position: relative;
-  **margin-top: -5px;**
-`;
-
-
-const Wrapper = styled.div`
-  position: relative;
-  background-size: 400% 400%;
-  width: 1642px;
-  height: 796px;
-  overflow: hidden;
-  animation: ${slideDown} 0.5s ease forwards;
+const LogoText = styled.div`
+  margin-top: 6px;
+  width: 100px; /* или другая нужная ширина */
+  margin: 0 auto;
+  color: #204abe;
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
 `;
 
 const GridWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(6, auto);
-  gap: 20px;
-  z-index: 133;
+  grid-template-columns: repeat(3, 293px); /* 3 колонки фиксированной ширины */
+  row-gap: 20px; /* отступы между строками */
+  max-height: calc(7 * (69px + 20px)); /* высота 7 строк */
+  max-width: 100%;
+  padding: 0; /* убираем внешние отступы */
+  z-index: 5;
+
+  margin-bottom: 34px;
 `;
 
-const PlayerBlock = styled.div<{ delay: number }>`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 480px;
-  height: 79px;
-  overflow: hidden;
+const PlayerBlock = styled.div`
   position: relative;
-  background: #000;
-
-  animation: ${fadeInUp} 0.4s ease forwards;
-  animation-delay: ${({ delay }) => delay}s;
-  opacity: 0;
-`;
-const TrenerBlock = styled.div`
   display: flex;
   align-items: center;
+  height: 66px;
+  background: linear-gradient(90deg, #001034 0%, #00217e 51%, #000f3a 100%);
+  box-sizing: border-box;
+  margin-left: 0;
+`;
+
+const RightInfo = styled.div`
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  margin-left: 12px;
   justify-content: space-between;
-  width: 100%;
-  max-width: 421px;
-  height: 79px;
-  overflow: hidden;
-  position: relative;
-  background: #015963;
 `;
 
-const NumberBox = styled.div`
-  width: 79px;
-  height: 79px;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  font-weight: bold;
-  color: white;
-  background: #015963;
+const NumberBlock = styled.div`
+  font-weight: 600;
+  font-size: 22px;
+  color: #fff;
   flex-shrink: 0;
-`;
-
-const Row = styled.div`
-  margin-top: 69px;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  z-index: 133;
 `;
 
 const NameBlock = styled.div`
-  background: #000;
-  color: #fff;
-  font-size: 24px;
-  font-weight: 400;
+  width: 209px
+  font-weight: 600;
+  font-size: 20px;
   text-transform: uppercase;
+  color: #fff;
+  margin-left: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  flex: 1;
-  padding: 0 12px;
-  text-align: center;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-grow: 1; /* чтобы занимать максимум доступного места */
 `;
 
-const RightImage = styled.img`
-  width: 71px;
-  height: 79px;
-  object-fit: cover;
+const LeftImage = styled.img`
+  position: absolute;
+  top: 0px;
+  right: 00px;
+  width: 50px;
+  height: 66px;
+  object-fit: contain;
   flex-shrink: 0;
 `;
 
-const Mach1 = styled.img`
-  position: absolute;
-  top: -40px;
-  left: 0;
-  width: 354px;
-  height: 354px;
-  z-index: 1;
-`;
-
-const Mach2Blur = styled.img`
-  position: absolute;
-  bottom: 0;
-  right: -100px;
-  width: 260px;
-  height: 260px;
-  z-index: 1;
-`;
-
-const TrName = styled.div`
-  background: #015963;
+const RightColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 25px;
+  width: 100%;
   color: #fff;
-  font-size: 24px;
+  font-weight: 600;
+  text-transform: uppercase;
+  user-select: none;
+`;
+
+// Блок каждого текста в правой колонке
+const InfoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+// Заголовок (например, "Главный тренер")
+const Title = styled.div`
+  font-size: 18px;
+  color: #fff;
   font-weight: 400;
+  text-transform: uppercase;
+`;
+
+const Fio = styled.div`
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
-  padding: 0 12px;
-  text-align: center;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  padding-right: 30px; /* чтобы было место под градиент */
+  }
 `;
 
-const Dolzhost = styled.div`
-position: absolute;
-bottom: -30px;
-right: 50%;
-transform: translateX(50%);
-  font-weight: 900;
-  font-size: 20px;
-  color: #fff;
-  max-width: 100%;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+// Логотип команды в MainBlock
+const TeamLogo = styled.img`
+  position: absolute;
+  top: 80px;
+  right: 50px;
+  width: 155px;
+  height: 182px;
+  object-fit: contain;
+  z-index: 10;
 `;

@@ -39,7 +39,7 @@ export const match: MatchData = {
   "time": "03:00",
   "team_1": {
     "id": "6696c7ec040190bdcc6d5aef",
-    "name": "Экспресс офис",
+    "name": "Газ",
     "img": "https://admin.sporlive.ru/static/images/d1a623bbbf09442bb6a01776df0d6d48.png",
     "description": "",
     "color": "#ff7b00",
@@ -65,7 +65,7 @@ export const match: MatchData = {
   },
   "team_2": {
     "id": "66ca45cbc7c6a5c776e7720b",
-    "name": "ТМЗС",
+    "name": "тор",
     "img": "https://admin.sporlive.ru/static/images/0bd63ef72ef64fd9969852472f6b64cc.png",
     "description": "",
     "color": "#ff0000",
@@ -817,7 +817,7 @@ export const scoreboard_data: Scoreboard = {
   team_2_score: 0,
   is_fouls: true,
   team_1_fouls: 1,
-  team_2_fouls: 0
+  team_2_fouls: 3
 };
 
 export const timer_data: TimerData = {

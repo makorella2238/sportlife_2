@@ -1,286 +1,263 @@
-"use client";
-
-import { useMatch } from "@/hooks";
-import { RefObject, useEffect, useRef, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 
 export const Mid = ({ show }: { show: boolean }) => {
-  const match = useMatch();
-  const titleWords = match?.tournament?.full_name;
-
-  const titleRef = useRef<HTMLDivElement>(null);
-  const [isTwoLines, setIsTwoLines] = useState(false);
-
-  useEffect(() => {
-    if (!titleRef.current) return;
-
-    const checkHeight = () => {
-      const height = titleRef.current!.offsetHeight;
-      setIsTwoLines(height > 75); // 75 — на случай чуть большего line-height
-    };
-
-    checkHeight();
-
-    // На всякий случай — если шрифт/размеры могут поменяться
-    const resizeObserver = new ResizeObserver(checkHeight);
-    resizeObserver.observe(titleRef.current);
-
-    return () => resizeObserver.disconnect();
-  }, [titleWords]);
-
   return (
-    <Container>
-      <Wrapper style={{ display: show ? "flex" : "none" }}>
-        <BackgroundImage />
-        <TitleContainer>
-          <TitleLine ref={titleRef}>{titleWords}</TitleLine>
-        </TitleContainer>
+    <Wrapper style={{ display: show ? "flex" : "none" }}>
+      {/* Серый фон-бэкграунд под всем */}
+      <BackgroundLayer />
+      {/* Абсолютный блок с логотипами (z-index меньше чем у главного) */}
+      <AbsoluteBlock>
+        <LogoTop src="/midlogo1.png" alt="Логотип 1" />
+        <BottomWrapper>
+          <LogoBottom src="/midlogo2.png" alt="Логотип 2" />
+          <LogoText>amfr.ru</LogoText>
+        </BottomWrapper>
+      </AbsoluteBlock>
 
-        <TeamsContainer>
-          <TourText side="left">{match?.stadium?.name}</TourText>
-          <TourText side="right">1 тур</TourText>
-        </TeamsContainer>
+      {/* Главный блок */}
+      <MainBlock>
+        <Header>СПОРТМАСТЕРPRO - ГОРОДСКАЯ ЛИГА. ВСЕРОССИЙСКИЙ ФИНАЛ.</Header>
 
-        <TeamsRow $isTwoLines={isTwoLines}>
-          <TeameBox color={match?.team_1?.color}>
-            <TeamLogo src='/comand-1.png' />
-            <TeamName side="left">{match?.team_1?.name}</TeamName>
-          </TeameBox>
+        <LogosContainer>
+          <ImageTeam src="/comand-1.png" alt="Газпром-Югра" />
+          <ImageTeam src="/comand-2.png" alt="Торпедо" />
+        </LogosContainer>
 
+        <MatchEnded>МАТЧ ОКОНЧЕН</MatchEnded>
 
-          <CenterBox>
-            <CenterImage src="/VS.png" alt="center image" />
-            <TeamNameForData side="top">
-              {/* дата отсюда */}31.07.2025
-            </TeamNameForData>
-            <TeamNameForData side="bottom">
-              {/* время отсюда */}03:00
-            </TeamNameForData>
-          </CenterBox>
+        <TeamsRow>
+          <Driver />
+          <TeamBox side="left">
+            <TeamName side="left">ГАЗПРОМ-ЮГРА</TeamName>
+            <Score side="left">5</Score>
+          </TeamBox>
 
-          <TeameBox color={match?.team_2?.color}>
-            <TeamLogo src='/comand-2.png' />
-            <TeamName side="right">{match?.team_2?.name}</TeamName>
-          </TeameBox>
+          <TeamBox side="right">
+            <Score side="right">2</Score>
+            <TeamName side="right">ТОРПЕДО</TeamName>
+          </TeamBox>
         </TeamsRow>
 
-        <MidMych src="/mych.png" alt="mych" />
-      </Wrapper>
-    </Container>
+        <SeriesScore>СЧЕТ В СЕРИИ 2-0</SeriesScore>
+      </MainBlock>
+    </Wrapper>
   );
 };
 
-const slideDown = keyframes`
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-`;
-
-
-
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
+// Стилизация
 const Wrapper = styled.div`
   position: relative;
-
-  width: 1280px;
-  height: 730px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-  background: linear-gradient(-45deg, #0e173f, #001b94, #0e173f);
-
-  animation: ${slideDown} 0.5s ease forwards;
-
-  padding-bottom: 20px;
-  z-index: 2;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #060f2d;
 `;
 
-const animatedGradient = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
-
-const BackgroundImage = styled.div`
+const BackgroundLayer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("/bgmid.png") no-repeat center center / cover;
-  background-size: 200% 200%;
-  animation: ${animatedGradient} 20s linear infinite;
-  z-index: 4;
+  background: rgb(151, 155, 170);
+  z-index: 0;
 `;
 
-const TitleContainer = styled.div`
-  padding: 20px 0; /* вместо фиксированной высоты */
-  background: white;
-  clip-path: polygon(10% 100%, 90% 100%, 100% 0, 0 0);
-  z-index: 5;
+const AbsoluteBlock = styled.div`
+  position: absolute;
+  top: 51%;
+  left: 50%;
+  transform: translate(-77%, -50%);
+  width: 943px;
+  height: 811px;
+  z-index: 3;
+  background: url("/bgabloutemid.png") no-repeat center center / cover;
+`;
+
+const LogoTop = styled.img`
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  max-height: 80px;
+`;
+
+const LogoBottom = styled.img`
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  max-height: 80px;
+`;
+
+const MainBlock = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1183px;
+  height: 753px;
+  background: url("/midbg.png") no-repeat center center / cover;
+  box-sizing: border-box;
+  z-index: 6;
+`;
+
+const Header = styled.h1`
+  font-size: 24px;
+  font-weight: bold;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-
-const TitleLine = styled.div`
-  color: #015963;
-  font-weight: 400;
-  font-size: 52px;
-  line-height: 70px;
-  letter-spacing: -2%;
+  height: 62px;
   text-align: center;
+  margin: 0; /* убрали нижний margin */
   text-transform: uppercase;
-  z-index: 10;
-  padding: 10px 20px;
-`;
-
-const TeamsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  z-index: 5;
-  gap: 0; /* трапеции будут вплотную */
-`;
-
-
-const TourText = styled.div<{ side: "left" | "right" }>`
-  width: 315px;
-  height: 49px;
-  background: ${({ side }) => (side === "left" ? "#141414" : "#015963")};
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 22px;
-  font-weight: 700;
+  background: linear-gradient(
+    90deg,
+    #b97800 0%,
+    #e5a01f 24.2%,
+    #e29602 55.5%,
+    #e5a01f 81.8%,
+    #b97802 100%
+  );
   color: #fff;
+  line-height: 62px;
+  margin-bottom: 100px;
+`;
+
+const LogosContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto 20px; /* сверху и снизу 0 и 20px, по бокам auto для центрирования */
+  width: 820px;
+`;
+
+const MatchEnded = styled.div`
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
-
-  clip-path: ${({ side }) =>
-    side === "right"
-      ? "polygon(0 100%, 100% 100%, 90% 0, 10% 0)" // перевернутая трапеция
-      : "polygon(10% 100%, 90% 100%, 100% 0, 0 0)"}; // обычная трапеция
-   ${({ side }) => side === "right" && "margin-left: -30px;"}
-      `;
-
-
-const TeamsRow = styled.div<{ $isTwoLines: boolean }>`
-  margin-top: ${({ $isTwoLines }) => ($isTwoLines ? "40px" : "30px")};
-  display: flex;
-  font-weight: 400;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between; /* для равного распределения */
-  width: 1100px; /* важно для правильной центровки */
-  padding: 0 60px;
-  z-index: 5;
+  color: #fff;
 `;
 
-const CenterBox = styled.div`
-  margin-top: 50px;
+const TeamsRow = styled.div`
+  position: relative;
+  width: 727px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  min-width: 250px;
-  max-width: 300px;
-  flex-shrink: 0;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  height: 56px;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, #001034 0%, #00217e 51%, #000f3a 100%);
 `;
 
-const CenterImage = styled.img`
-  width: 175px; // подбери нужный размер
-  height: 109px;
-  object-fit: contain;
-`;
-
-const TeameBox = styled.div<{ color?: string }>`
-  margin-top: 40px;
+const TeamBox = styled.div<{ side: "left" | "right" }>`
+  width: 560px;
+  height: 56px;
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  flex: 1; /* чтобы занимали одинаковое пространство */
-  max-width: 350px; /* можно ограничить ширину */
+  justify-content: center;
+  background: linear-gradient(
+    90deg,
+    #b97800 0%,
+    #e5a01f 24.2%,
+    #e29602 55.5%,
+    #e5a01f 81.8%,
+    #b97802 100%
+  );
+  z-index: 10;
+  overflow: visible;
 `;
 
 const TeamName = styled.div<{ side: "left" | "right" }>`
-  width: 100%;
-  font-size: 35px;
-  color: #fff;
-  padding: 0 24px;
+  font-family: "Furore", sans-serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0;
   text-transform: uppercase;
-  text-align: center;
-  max-width: 100%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  weiht: 500px;
-
-background: ${({ side }) =>
-  side === "left"
-    ? "linear-gradient(90deg, #084d5585 0%, rgba(83, 155, 247, 0) 100%)"
-    : "linear-gradient(90deg, rgba(83, 155, 247, 0) 0%, #084d5585 100%)"};
-
-  border-radius: 0 0 140px 140px;
-
-  padding: 10px 30px;
-
-  white-space: nowrap; // ⬅️ Не даёт переносить строки
-  overflow: hidden; // ⬅️ Обрезает текст, если он не вмещается
-`;
-
-const TeamNameForData = styled.div<{ side: "top" | "bottom" }>`
-  width: 224px;
-  font-size: 37px;
   color: #fff;
-  padding: 0 24px;
-  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: calc(100% - 80px);
   text-align: center;
-  max-width: 100%;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  user-select: none;
 
-  margin-top: ${({ side }) => (side === "top" ? "30px" : "12px")};
+  ${(props) =>
+    props.side === "left" ? "padding-right: 75px;" : "padding-left: 85px;"}
 `;
 
-const TeamLogo = styled.img`
-  width: 263px;
-  height: 263px;
-  object-fit: contain;
-  margin-bottom: 20px;
-`;
-
-const MidMych = styled.img`
+const BottomWrapper = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: 50px;   /* Прижать снизу с отступом */
+  left: 20px;     /* По левому краю, как у LogoBottom */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Чтобы текст и лого были слева */
+  gap: 8px; /* Отступ между логотипом и текстом */
+`;
+
+
+const ImageTeam = styled.img`
+  weight: 215px;
+  height: 249px;
+`;
+
+const Score = styled.div<{ side: "left" | "right" }>`
+  width: 80px;
+  height: 56px;
+  font-size: 47px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 56px;
+  background: #fff;
+  color: #000;
+  position: absolute;
+  top: 0;
+  ${(props) => (props.side === "left" ? "right: 0;" : "left: 0;")}
+  user-select: none;
+`;
+
+const SeriesScore = styled.div`
+  color: #fff;
+  text-align: center;
+  font-size: 28px;
+  margin-top: 20px;
+  font-weight: semibold;
+  text-transform: uppercase;
+`;
+
+const LogoText = styled.div`
+    margin-top: 6px;
+  width: 100px; /* или другая нужная ширина */
+  margin: 0 auto;
+  color: #204abe;
+  font-size: 16px;
+  font-weight: 300;
+  text-align: center;
+`;
+
+
+const Driver = styled.div`
+  position: absolute;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 6;
-  width:260px; // подбери нужный размер
-  height: auto;
+  width: 4px;
+  height: 56px;
+  background: #060f2d;
+  z-index: 15;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 4px;
+    height: 22px;
+    background: #fff;
+    transform: translateY(-50%);
+    box-shadow: none;
+    border: none;
+    box-sizing: border-box;
+  }
 `;

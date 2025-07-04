@@ -7,38 +7,40 @@ export const Big = ({ show }: { show: boolean }) => {
   const match = useMatch();
   const { scoreboard } = useScoreboard();
   const scenario = useScenario();
+  const team_1 = 'ГАЗПРОМ-ЮГРА'
+  const team_2 = 'торпедо'
 
   return (
     <Wrapper style={{ display: show ? "flex" : "none" }}>
-
       <ScenarioContainer>
         <ScenarioGradientLeft />
         <ScenarioGradientRight />
       </ScenarioContainer>
 
       <Row>
-        <TeamLogo side="left" src='/comand-1.png' />
+          <TeamLogo side="left" src="/comand-1.png" />
+          <Driver/>
+        <RowTeams>
 
-        <TeamBox side="left" color={match?.team_1?.color}>
-          <TeamName side="left">{match?.team_1?.name}</TeamName>
-        </TeamBox>
+          <TeamBox side="left">
+            <TeamName side="left">{team_1}</TeamName>
+            <ScoreText side="left">{scoreboard?.team_1_score}</ScoreText>
+          </TeamBox>
 
-        <ScoreBox>
-          <ScoreText>
-            {scoreboard?.team_1_score} - {scoreboard?.team_2_score}
-          </ScoreText>
-        </ScoreBox>
+          <TeamBox side="right">
+            <ScoreText side="right">{scoreboard?.team_2_score}</ScoreText>
+            <TeamName side="right">{team_2}</TeamName>
+          </TeamBox>
+        </RowTeams>
 
-        <TeamBox side="right" color={match?.team_2?.color}>
-          <TeamName side="right">{match?.team_2?.name}</TeamName>
-        </TeamBox>
+        <Text>ПОСЛЕ ПЕРВОГО ТАЙМА</Text>
       </Row>
 
-      <TeamLogo side="right" src='/comand-2.png' />
-
+      <TeamLogo side="right" src="/comand-2.png" />
+      {/* 
       <ScenarioContainerStart>
         <ScenarioText>{scenario}</ScenarioText>
-      </ScenarioContainerStart>
+      </ScenarioContainerStart> */}
     </Wrapper>
   );
 };
@@ -57,7 +59,6 @@ const slideUp = keyframes`
 export const SlideUpDiv = styled.div`
   animation: ${slideUp} 0.5s ease forwards;
 `;
-
 
 const Wrapper = styled.div`
   position: absolute;
@@ -82,65 +83,75 @@ const Row = styled.div`
   justify-content: center;
   gap: 0;
   height: 105px;
-  border-radius: 24px;
-  background: linear-gradient(90.04deg, #015963 0.38%, #27C87E 49.95%, #015963 99.97%);
-  box-sizing: border-box;
+  background: linear-gradient(90deg, #000924 0%, #051a64 52.1%, #000924 100%);
 
-  border-bottom: 8px solid #0A3C64;
+  box-sizing: border-box;
 `;
 
+const RowTeams = styled.div`
+  position: absolute;
+  top: 0;
+  right: 50%;
+  transform: translateX(50%);
+  width: 1060px;
+  display: flex;
+  justify-content: center; /* по горизонтали центр */
+  align-items: flex-start; /* прижать к верхнему краю */
+  gap: 0;
+  height: 56px; /* высота строки */
+  box-sizing: border-box;
+  background: linear-gradient(
+    90deg,
+    #b97800 0%,
+    #e5a01f 24.2%,
+    #e29602 55.5%,
+    #e5a01f 81.8%,
+    #b97802 100%
+  );
+`;
 
 const TeamBox = styled.div<{ side: "left" | "right"; color?: string }>`
   width: 560px;
+  height: 56px; /* фиксируем высоту */
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: center;  /* по центру по вертикали */
-  height: 90px;
-  ${(props) =>
-    props.side === "left"
-      ? "transform: translateX(32px);"
-      : "transform: translateX(-8px);"}
+  align-items: center; /* центр по вертикали */
+  justify-content: center; /* центрируем название по горизонтали */
+background: linear-gradient(90deg, #B97800 0%, #E5A01F 24.2%, #E29602 55.5%, #E5A01F 81.8%, #B97802 100%);
 
+  background: 
   z-index: 10;
   overflow: visible;
 `;
 
 const TeamLogo = styled.img<{ side: "left" | "right" }>`
   position: absolute;
-  width: 238px;
-  height: 238px;
+  width: 100px;
+  height: auto;
   object-fit: contain;
-  left: ${(props) => (props.side === "left" ? "-80px" : "auto")};
+  left: ${(props) => (props.side === "left" ? "-60px" : "auto")};
   right: ${(props) => (props.side === "right" ? "-50px" : "auto")};
-  top: ${(props) => (props.side === "right" ? "90px" : "60px")};
+  top: ${(props) => (props.side === "right" ? "90px" : "55px")};
   transform: translateY(-50%);
   z-index: 20;
 `;
 
+// Обёртка для названия команды, по центру блока
 const TeamName = styled.div<{ side: "left" | "right" }>`
-  width: calc(100% - 70px);
   font-family: "Furore", sans-serif;
   font-weight: 400;
-  font-size: 46px;
-  line-height: 48px;
-  letter-spacing: 0%;
+  font-size: 28px; /* подкорректировал для блока меньшей высоты */
+  line-height: 1;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: #fff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
   overflow: hidden;
-  max-width: 100%;
+  max-width: calc(100% - 80px); /* оставляем место под счетчик */
 
-  text-align: ${(props) => (props.side === "left" ? "right" : "left")};
-
-  padding-left: ${(props) => (props.side === "left" ? "40px" : "40px")};
-  margin-right: ${(props) => (props.side === "right" ? "60px" : "30px")};
-
-  position: relative;
-  mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
-  z-index: 1;
+  text-align: center;
+  user-select: none;
 `;
 
 const ScenarioContainer = styled.div`
@@ -172,73 +183,61 @@ const ScenarioGradientRight = styled.div`
   z-index: 2;
 `;
 
-const ScoreBox = styled.div`
-  position: relative;
-  background: linear-gradient(90.04deg, #015963 0.38%, #27C87E 49.95%, #015963 99.97%);
-  border-left: 5px solid white;
-  border-right: 5px solid white;
-  border-bottom: 5px solid white;
-  border-radius: 0 0 10px 10px;
-  color: #fff;
-  font-weight: 400;
-  padding: 0 5px;
-  height: 83px;
-  display: flex;
-  align-items: flex-start; /* прижимаем текст к верхнему краю */
-  justify-content: center;
-  width: 201px;
-  z-index: 1;
-  margin-bottom: 8px;
-`;
-
-
-const ScoreText = styled.div`
-padding-top: 6px;
-  width: 100%;
-  font-size: 64px;
+// Счётчик, фиксированный размер, прижат к нужному краю
+const ScoreText = styled.div<{ side: "left" | "right" }>`
+  width: 80px;
+  height: 56px;
+  font-size: 47px;
   font-weight: 700;
+  text-align: center;
+  line-height: 56px; /* вертикальное центрирование */
+  background: #fff;
+  color: #000;
+  position: absolute;
+  top: 0;
+
+  /* прижатие по горизонтали */
+  ${(props) =>
+    props.side === "left"
+      ? "right: 0;" // у левой команды — счётчик справа
+      : "left: 0;"} // у правой команды — счётчик слева
+
+  user-select: none;
+  justify-content: space-between;
+`;
+const Text = styled.div`
+  position: absolute;
+  bottom: 13px;
+  right: 50%;
+  transform: translateX(50%);
+  width: 100%;
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
   text-align: center;
   line-height: 1;
 `;
 
-const ScenarioContainerStart = styled.div`
+const Driver = styled.div`
   position: absolute;
-  top: -35px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 282px;
-  height: 75px;
-  border-radius: 44px 44px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  overflow: hidden;
+  width: 4px;
+  height: 56px;
+  background: #060f2d;
+  border-radius: 2px;
+  z-index: 15;
 
-  background: #015963;
-`;
-
-
-// Скорректируем ScenarioText, чтобы занял всё пространство
-const ScenarioText = styled.div`
-  flex: 1;
-  font-family: "Furore", sans-serif;
-  font-size: 24px;
-  font-weight: 4  00;
-  color: #fff;
-  padding: 0 20px;
-  line-height: 1;
-  white-space: nowrap;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ScenarioSlashLeft = styled.div`
-  width: 0; // убираем ширину, т.к. срезы есть в clip-path
-`;
-
-const ScenarioSlashRight = styled.div`
-  width: 0; // то же самое
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 4px;
+    height: 22px;
+    background: #fff;
+    border-radius: 1px;
+    transform: translateY(-50%);
+  }
 `;

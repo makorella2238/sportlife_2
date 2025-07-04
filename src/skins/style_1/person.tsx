@@ -1,27 +1,51 @@
 import { useMatch } from "@/hooks";
 import styled, { keyframes } from "styled-components";
 
+
 export const Person = ({ kind, show }: { kind: "red" | "yellow" | "goal" | "coach" | "judge"; show: boolean }) => {
   const match = useMatch();
+
+  const renderCards = () => {
+    if (kind === "red") {
+      return (
+        <CardGroup side="red">
+          <Card src="/redCard.png" alt="Red Card" />
+          <Card src="/yellowCard.png" alt="Yellow Card" style={{ marginLeft: 16 }} />
+        </CardGroup>
+      );
+    }
+    if (kind === "yellow" || kind === "goal") {
+      return (
+        <CardGroup side="yellow">
+          <Card src={"/yellowCard.png"} alt={`${kind} Card`} />
+        </CardGroup>
+      );
+    }
+    return null;
+  };
+
   return (
     <Wrapper style={{ display: show ? "flex" : "none" }}>
+            <BackgroundLayer />
       <TeamBoxWrapper>
-        {kind == "goal" && <PersImage src="/pers.png" alt="Player" />}
-
-        {kind == "goal" && <Goal>ГОЛ!</Goal>}
-        <TeamBox side="left" kind ={kind}>
+        {kind === "goal" && <PersImage src="/persImg.png" alt="Player" />}
+        {renderCards()}
+        <TeamBox side="left" kind={kind}>
           <Col>
             <Row>
-              <TeamName side="left">Иванов Олег 37’</TeamName>
+              <TeamName side="right">ДМИТРИЙ ПОКРОВСКИЙ</TeamName>
+              <TeamName side="right">28</TeamName>
             </Row>
-            <TeamNameLit side="right">экспресс офис</TeamNameLit>
+            <TeamNameLit side="right">8 МЯЧЕЙ В 7 ИГРАХ</TeamNameLit>
           </Col>
+          <Deckor src="bibRightDekor.png"  alt="Deckor"/>
         </TeamBox>
-        <TeamLogo side="right" src='/comand-1.png'/>
+        <TeamLogo side="right" src="/comand-1.png" />
       </TeamBoxWrapper>
     </Wrapper>
   );
 };
+
 
 const slideInFromRight = keyframes`
   from {
@@ -33,9 +57,26 @@ const slideInFromRight = keyframes`
     opacity: 1;
   }
 `;
+const BackgroundLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(151, 155, 170);
+  z-index: 0;
+`;
 
 const Row = styled.div`
+  position: absolute;
+  top: -15px;
+  right: -50px;
   display: flex;
+  gap: 16px;
+   width: 510px;
+   padding: 6px 12px;
+   z-index: 10;
+  background: linear-gradient(90deg, #B97800 0%, #E29602 55.5%, #B97802 100%);
 `;
 
 const Wrapper = styled.div`
@@ -45,17 +86,35 @@ const Wrapper = styled.div`
   z-index: 9999;
 `;
 
+const CardGroup = styled.div<{ side: "yellow" | "red" }>`
+  position: absolute;
+  left: ${(props) => (props.side === "red" ? "-75px;" : "-20px")}; 
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 5;
+`;
+
+const Card = styled.img`
+  width: 40px;
+  height: 60px;
+  object-fit: contain;
+`;
+
+
 const TeamBoxWrapper = styled.div`
   position: absolute;
-  bottom: 120px; // блок поднимается от низа
+  bottom: 120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 475px;
+  width: 650px; // ← Исправлено
   display: flex;
   align-items: flex-start;
   animation: ${slideInFromRight} 0.6s ease-out forwards;
   z-index: 10;
-  background: transparent; // на всякий случай
+  background: transparent;
 `;
 
 // const YellowBarLeft = styled.div`
@@ -70,30 +129,11 @@ const TeamBoxWrapper = styled.div`
 //   z-index: 3;
 // `;
 
-const Goal = styled.div`
-  position: absolute;
-  top: 100px;
-  right: 155px;
-  width: 179px;
-  height: 50px;
-  background: linear-gradient(360deg, #519bfa 0%, #2ec5fe 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Furore", sans-serif;
-  font-size: 24px;
-  font-weight: bold;
-  color: #fff;
-  z-index: 4;
-  clip-path: polygon(5% 100%, 95% 100%, 100% 0, 0 0);
-  overflow: hidden;
-`;
-
 const PersImage = styled.img`
   position: absolute;
   top: -130px;
   right: 10px;
-  width: 120px;
+  width: 126px;
   height: 130px;
   object-fit: cover;
   z-index: 2;
@@ -101,33 +141,34 @@ const PersImage = styled.img`
 
 const TeamLogo = styled.img<{ side: "left" | "right" }>`
   position: absolute;
-  top: -34px;
+  top: -20px;
   right: -90px;
-  height: 186px;
-  width: 186px;
+  height: 120px;
+  width: 127px;
+  object-fit: contain;
+  margin-left: 20px;
+  z-index: 3;
+  align-self: center;
+`;
+
+const Deckor = styled.img`
+  position: absolute;
+  top: 88px;
+  right: 40px;
+  height: 19px;
+  width: 226px;
   object-fit: contain;
   margin-left: 20px;
   z-index: 3;
   align-self: center;
 `;
 const TeamBox = styled.div<{ side: "left" | "right"; kind?: "red" | "yellow" | "goal" | "coach" | "judge" }>`
+  width: 650px;
   background: #141414;
   position: relative;
-  display: flex;
-  height: 100px;
+  height: 90px;
+  background: linear-gradient(90deg, #001034 0%, #00217e 51%, #000f3a 100%);
   align-items: center;
-  overflow: hidden;
-  justify-content: flex-end;
-  padding-left: 100px;
-  border-radius: 0 0 0 180px;
-
-  /* Добавляем верхний бордер в зависимости от kind */
-  border-top: ${({ kind }) =>
-    kind === "red"
-      ? "20px solid #FF370F"
-      : kind === "yellow"
-      ? "20px solid #FFD900"
-      : "none"};
 `;
 
 
@@ -137,23 +178,26 @@ const Col = styled.div`
   z-index: 2;
   margin-right: 100px;
   align-items: flex-end;
+  position: relative; // добавлено
+  height: 100%;        // важно, чтобы позиционировать потомков
 `;
 
 const TeamName = styled.div<{ side: "left" | "right" }>`
   height: 40px;
   display: flex;
+ 
   align-items: center;
   font-family: "Furore", sans-serif;
   font-size: 35px;
   text-transform: uppercase;
   color: #fff;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   z-index: 1;
 `;
 
 const TeamNameLit = styled.div<{ side: "left" | "right" }>`
+  position: absolute; // добавлено
+  bottom: 6px;          // прижимаем вниз
   height: 40px;
   display: flex;
   align-items: center;
@@ -165,6 +209,7 @@ const TeamNameLit = styled.div<{ side: "left" | "right" }>`
   overflow: hidden;
   text-overflow: ellipsis;
   z-index: 1;
+
   ${({ side }) =>
     side === "left"
       ? `
@@ -176,3 +221,4 @@ const TeamNameLit = styled.div<{ side: "left" | "right" }>`
         justify-content: flex-end;
       `}
 `;
+
