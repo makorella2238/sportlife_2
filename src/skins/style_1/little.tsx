@@ -63,7 +63,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 70px;
   left: 62px;
-  width: 536px; /* фиксированная ширина */
+  width: 466px; /* фиксированная ширина */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,7 +142,7 @@ const ScoreValue = styled.div`
 
 const TimerText = styled.div`
   position: absolute;
-  bottom: 43px;
+  bottom: 46px;
   left: 50%;
   transform: translateX(-50%);
   background: #015963;
@@ -150,7 +150,7 @@ const TimerText = styled.div`
   height: 24px;
   font-size: 18px;
   font-weight: 400;
-  padding-bottom: 3px;
+  padding-bottom: 1px;
   color: #fff;
   text-align: center;
   border-radius: 12px 12px 0 0;
@@ -162,7 +162,7 @@ const TimerText = styled.div`
 
 const FoulsRowNew = styled.div`
   position: absolute;
-  bottom: -22px;
+  bottom: -25px;
   left: 50%;
   transform: translateX(-50%);
   width: 143px;
@@ -191,7 +191,7 @@ const Row = styled.div`
 const TeamLogo = styled.img<{ side: "left" | "right" }>`
   position: absolute;
   top: 50%;
-  left: ${({ side }) => (side === "right" ? "200px" : "2px")};
+  left: ${({ side }) => (side === "right" ? "165px" : "2px")};
   transform: translate(-50%, -50%);
   z-index: 2;
   width: 80px;

@@ -25,8 +25,8 @@ export const AwayRoster = ({ show }: { show: boolean }) => {
 
         <Row>
           <GridWrapper>
-            {players.map((player, i) => (
-              <PlayerBlock key={i}>
+              {players.map((player, i) => (
+              <PlayerBlock key={i} delay={i * 0.12}>
                 <NumberBox>{player.player_number}</NumberBox>
                 <NameBlock>{player.player_fio}</NameBlock>
                 <RightImage src="/sostpers.png" />
@@ -61,6 +61,18 @@ const slideDown = keyframes`
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+`;
+
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 `;
 
@@ -194,7 +206,7 @@ const GridWrapper = styled.div`
   z-index: 133;
 `;
 
-const PlayerBlock = styled.div`
+const PlayerBlock = styled.div<{ delay: number }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,8 +216,11 @@ const PlayerBlock = styled.div`
   overflow: hidden;
   position: relative;
   background: #000;
-`;
 
+  animation: ${fadeInUp} 0.4s ease forwards;
+  animation-delay: ${({ delay }) => delay}s;
+  opacity: 0;
+`;
 const TrenerBlock = styled.div`
   display: flex;
   align-items: center;

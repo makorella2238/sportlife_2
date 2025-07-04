@@ -26,7 +26,7 @@ export const HomeRoster = ({ show }: { show: boolean }) => {
         <Row>
           <GridWrapper>
             {players.map((player, i) => (
-              <PlayerBlock key={i}>
+              <PlayerBlock key={i} delay={i * 0.12}>
                 <NumberBox>{player.player_number}</NumberBox>
                 <NameBlock>{player.player_fio}</NameBlock>
                 <RightImage src="/sostpers.png" />
@@ -52,6 +52,17 @@ export const HomeRoster = ({ show }: { show: boolean }) => {
     </Container>
   );
 };
+
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 const slideDown = keyframes`
   from {
@@ -110,13 +121,12 @@ const Header = styled.div`
   justify-content: center;
 `;
 
-
 const TitleContainer = styled.div`
   position: relative;
   width: 756px;
   padding: 38px 35px;
   border-radius: 0 0 24px 24px;
-  background: #FFFFFF;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -132,7 +142,7 @@ const TitleLine = styled.div`
   line-height: 70px;
   letter-spacing: -2%;
   text-align: center;
-  color: #090E5D;
+  color: #090e5d;
   text-transform: uppercase;
 `;
 
@@ -176,7 +186,6 @@ const TeamsContainer = styled.div`
   **margin-top: -5px;**
 `;
 
-
 const Wrapper = styled.div`
   position: relative;
   background-size: 400% 400%;
@@ -194,7 +203,7 @@ const GridWrapper = styled.div`
   z-index: 133;
 `;
 
-const PlayerBlock = styled.div`
+const PlayerBlock = styled.div<{ delay: number }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,6 +213,10 @@ const PlayerBlock = styled.div`
   overflow: hidden;
   position: relative;
   background: #000;
+
+  animation: ${fadeInUp} 0.4s ease forwards;
+  animation-delay: ${({ delay }) => delay}s;
+  opacity: 0;
 `;
 
 const TrenerBlock = styled.div`
@@ -302,10 +315,10 @@ const TrName = styled.div`
 `;
 
 const Dolzhost = styled.div`
-position: absolute;
-bottom: -30px;
-right: 50%;
-transform: translateX(50%);
+  position: absolute;
+  bottom: -30px;
+  right: 50%;
+  transform: translateX(50%);
   font-weight: 900;
   font-size: 20px;
   color: #fff;
