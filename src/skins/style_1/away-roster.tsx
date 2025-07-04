@@ -78,7 +78,7 @@ const slideDown = keyframes`
     opacity: 1;
   }
 `;
-const Wrapper = styled.div<{ show: boolean }>`
+const Wrapper = styled.div`
   position: relative;
   width: 100%;
   min-height: 100vh;
