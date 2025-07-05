@@ -10,7 +10,6 @@ export const Person = ({ kind, show }: { kind: "red" | "yellow" | "goal" | "coac
       return (
         <CardGroup side="red">
           <Card src="/redCard.png" alt="Red Card" />
-          <Card src="/yellowCard.png" alt="Yellow Card" style={{ marginLeft: 16 }} />
         </CardGroup>
       );
     }
@@ -88,7 +87,7 @@ const Wrapper = styled.div`
 
 const CardGroup = styled.div<{ side: "yellow" | "red" }>`
   position: absolute;
-  left: ${(props) => (props.side === "red" ? "-75px;" : "-20px")}; 
+  left: ${(props) => (props.side === "red" ? "-20px;" : "-20px")}; 
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -131,8 +130,8 @@ const TeamBoxWrapper = styled.div`
 
 const PersImage = styled.img`
   position: absolute;
-  top: -130px;
-  right: 10px;
+  top: -145px;
+  right: 65px;
   width: 126px;
   height: 130px;
   object-fit: cover;
