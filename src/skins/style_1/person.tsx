@@ -36,7 +36,7 @@ export const Person = ({ kind, show }: { kind: "red" | "yellow" | "goal" | "coac
               <TeamName side="right">ДМИТРИЙ ПОКРОВСКИЙ</TeamName>
               <TeamName side="right">28</TeamName>
             </Row>
-            <TeamNameLit side="right">8 МЯЧЕЙ В 7 ИГРАХ</TeamNameLit>
+            <TeamNameLit side="right">{match?.team_1?.name}</TeamNameLit>
           </Col>
           <Deckor src="bibRightDekor.png"  alt="Deckor"/>
         </TeamBox>

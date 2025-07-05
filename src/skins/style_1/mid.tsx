@@ -1,8 +1,9 @@
+import { useMatch } from "@/hooks";
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-
 export const Mid = ({ show }: { show: boolean }) => {
+  const match = useMatch();
   return (
     <>
       <BackgroundLayer /> {/* фон всегда под всем */}
@@ -19,29 +20,28 @@ export const Mid = ({ show }: { show: boolean }) => {
 
           {/* Главный блок */}
           <MainBlock>
-            <Header>СПОРТМАСТЕРPRO - ГОРОДСКАЯ ЛИГА. ВСЕРОССИЙСКИЙ ФИНАЛ.</Header>
-
-            <LogosContainer>
-              <ImageTeam src="/comand-1.png" alt="Газпром-Югра" />
-              <ImageTeam src="/comand-2.png" alt="Торпедо" />
-            </LogosContainer>
-
-            <MatchEnded>МАТЧ ОКОНЧЕН</MatchEnded>
+            <Header>
+              СПОРТМАСТЕРPRO - ГОРОДСКАЯ ЛИГА. ВСЕРОССИЙСКИЙ ФИНАЛ.
+            </Header>
 
             <TeamsRow>
-              <Driver />
-              <TeamBox side="left">
-                <TeamName side="left">ГАЗПРОМ-ЮГРА</TeamName>
-                <Score side="left">5</Score>
-              </TeamBox>
+              <TeameBox>
+                <TeamLogo src="/comand-1.png" />
+                <TeamName>{match?.team_1?.name}</TeamName>
+              </TeameBox>
 
-              <TeamBox side="right">
-                <Score side="right">2</Score>
-                <TeamName side="right">ТОРПЕДО</TeamName>
-              </TeamBox>
+              <TeameBox>
+                <TeamLogo src="/comand-2.png" />
+                <TeamName>{match?.team_2?.name}</TeamName>
+              </TeameBox>
             </TeamsRow>
 
-            <SeriesScore>СЧЕТ В СЕРИИ 2-0</SeriesScore>
+            <MatchInfoRow>
+              <MatchBlock>СК ТУЛГУ</MatchBlock>
+              <MatchBlock>31.07.2025</MatchBlock>
+              <MatchBlock>03:00</MatchBlock>
+              <MatchBlock>1 тур</MatchBlock>
+            </MatchInfoRow>
           </MainBlock>
         </AnimatedWrapper>
       )}
@@ -56,6 +56,21 @@ const slideDown = keyframes`
   }
   to {
     transform: translateY(0);
+    opacity: 1;
+  }
+`;
+
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1);
     opacity: 1;
   }
 `;
@@ -119,7 +134,23 @@ const MainBlock = styled.div`
   background: url("/midbg.png") no-repeat center center / cover;
   box-sizing: border-box;
   z-index: 6;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.05); /* 5% затемнение, т.е. фон на 95% виден */
+    z-index: 1;
+  }
+
+  /* Все содержимое поверх затемнения */
+  > * {
+    position: relative;
+    z-index: 2;
+  }
 `;
+
 
 const Header = styled.h1`
   font-size: 24px;
@@ -142,113 +173,18 @@ const Header = styled.h1`
   margin-bottom: 100px;
 `;
 
-const LogosContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto 20px; /* сверху и снизу 0 и 20px, по бокам auto для центрирования */
-  width: 820px;
-`;
-
-const MatchEnded = styled.div`
-  text-align: center;
-  font-size: 28px;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  color: #fff;
-`;
-
-const TeamsRow = styled.div`
-  position: relative;
-  width: 727px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0;
-  height: 56px;
-  box-sizing: border-box;
-  background: linear-gradient(90deg, #001034 0%, #00217e 51%, #000f3a 100%);
-`;
-
-const TeamBox = styled.div<{ side: "left" | "right" }>`
-  width: 560px;
-  height: 56px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(
-    90deg,
-    #b97800 0%,
-    #e5a01f 24.2%,
-    #e29602 55.5%,
-    #e5a01f 81.8%,
-    #b97802 100%
-  );
-  z-index: 10;
-  overflow: visible;
-`;
-
-const TeamName = styled.div<{ side: "left" | "right" }>`
-  font-family: "Furore", sans-serif;
-  font-weight: 400;
-  font-size: 28px;
-  line-height: 1;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: calc(100% - 80px);
-  text-align: center;
-  user-select: none;
-
-  ${(props) =>
-    props.side === "left" ? "padding-right: 75px;" : "padding-left: 85px;"}
-`;
-
 const BottomWrapper = styled.div`
   position: absolute;
-  bottom: 50px;   /* Прижать снизу с отступом */
-  left: 20px;     /* По левому краю, как у LogoBottom */
+  bottom: 50px; /* Прижать снизу с отступом */
+  left: 20px; /* По левому краю, как у LogoBottom */
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Чтобы текст и лого были слева */
   gap: 8px; /* Отступ между логотипом и текстом */
 `;
 
-
-const ImageTeam = styled.img`
-  weight: 215px;
-  height: 249px;
-`;
-
-const Score = styled.div<{ side: "left" | "right" }>`
-  width: 80px;
-  height: 56px;
-  font-size: 47px;
-  font-weight: 700;
-  text-align: center;
-  line-height: 56px;
-  background: #fff;
-  color: #000;
-  position: absolute;
-  top: 0;
-  ${(props) => (props.side === "left" ? "right: 0;" : "left: 0;")}
-  user-select: none;
-`;
-
-const SeriesScore = styled.div`
-  color: #fff;
-  text-align: center;
-  font-size: 28px;
-  margin-top: 20px;
-  font-weight: semibold;
-  text-transform: uppercase;
-`;
-
 const LogoText = styled.div`
-    margin-top: 6px;
+  margin-top: 6px;
   width: 100px; /* или другая нужная ширина */
   margin: 0 auto;
   color: #204abe;
@@ -258,27 +194,56 @@ const LogoText = styled.div`
 `;
 
 
-const Driver = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 56px;
-  background: #060f2d;
-  z-index: 15;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 4px;
-    height: 22px;
-    background: #fff;
-    transform: translateY(-50%);
-    box-shadow: none;
-    border: none;
-    box-sizing: border-box;
-  }
+const TeamsRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 168px;
+  margin-top: 20px;
+  z-index: 5;
 `;
+
+const TeameBox = styled.div<{ color?: string }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const TeamName = styled.div`
+  width: 100%;
+  font-size: 27px;
+  font-weight: 400;
+  color: #fff;
+  padding: 0 24px;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 100%;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+`;
+
+const TeamLogo = styled.img`
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  margin-bottom: 20px;
+
+  animation: ${pulse} 2s infinite ease-in-out;
+
+`;
+const MatchInfoRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 90px;
+`;
+
+const MatchBlock = styled.div`
+  font-size: 24px;
+  font-weight: 400;
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+`;
+

@@ -63,7 +63,8 @@ export const SlideUpDiv = styled.div`
 const Wrapper = styled.div`
   position: absolute;
   bottom: 90px;
-  left: 13%;
+  right: 26%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -75,7 +76,7 @@ const Wrapper = styled.div`
 `;
 
 const Row = styled.div`
-  width: 1420px;
+  width: 1020px; /* уменьшено с 1420 */
   position: relative;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -99,19 +100,10 @@ const RowTeams = styled.div`
   align-items: flex-start; /* прижать к верхнему краю */
   gap: 0;
   height: 56px; /* высота строки */
-  box-sizing: border-box;
-  background: linear-gradient(
-    90deg,
-    #b97800 0%,
-    #e5a01f 24.2%,
-    #e29602 55.5%,
-    #e5a01f 81.8%,
-    #b97802 100%
-  );
 `;
 
 const TeamBox = styled.div<{ side: "left" | "right"; color?: string }>`
-  width: 560px;
+  width: 360px;
   height: 56px; /* фиксируем высоту */
   position: relative;
   display: flex;
@@ -126,15 +118,19 @@ background: linear-gradient(90deg, #B97800 0%, #E5A01F 24.2%, #E29602 55.5%, #E5
 
 const TeamLogo = styled.img<{ side: "left" | "right" }>`
   position: absolute;
-  width: 100px;
+  width: 160px; /* увеличено с 100px */
   height: auto;
   object-fit: contain;
-  left: ${(props) => (props.side === "left" ? "-60px" : "auto")};
-  right: ${(props) => (props.side === "right" ? "-50px" : "auto")};
-  top: ${(props) => (props.side === "right" ? "90px" : "55px")};
+
+  /* смещение для перекрытия */
+  left: ${(props) => (props.side === "left" ? "-80px" : "auto")};
+  right: ${(props) => (props.side === "right" ? "-80px" : "auto")};
+
+  top: ${(props) => (props.side === "right" ? "75px" : "50px")}; /* немного выше */
   transform: translateY(-50%);
-  z-index: 20;
+  z-index: 25;
 `;
+
 
 // Обёртка для названия команды, по центру блока
 const TeamName = styled.div<{ side: "left" | "right" }>`
@@ -148,8 +144,9 @@ const TeamName = styled.div<{ side: "left" | "right" }>`
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
   overflow: hidden;
-  max-width: calc(100% - 80px); /* оставляем место под счетчик */
+  max-width: calc(100% - 180px); /* оставляем место под счетчик */
 
+  padding: ${(props) => (props.side === "left" ? "0 115px 0 0" : "0 0 0 80px")};
   text-align: center;
   user-select: none;
 `;

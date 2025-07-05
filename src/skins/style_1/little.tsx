@@ -13,11 +13,8 @@ export const Little = ({ show }: { show: boolean }) => {
   return (
     <Wrapper style={{ display: show ? "flex" : "none" }}>
       <Row>
-        <KomandLogo src="litllogo.png" alt="logo" />
-
         <TimeBlock>
           <Time>2</Time>
-          <TimeDivider />
           <Time>26:03</Time>
         </TimeBlock>
 
@@ -59,8 +56,6 @@ export const Little = ({ show }: { show: boolean }) => {
           </FoulsRow>
         </TeamContainer>
       </Row>
-
-      <Timeoit>ТАЙМ АУТ</Timeoit>
     </Wrapper>
   );
 };
@@ -80,18 +75,14 @@ const Wrapper = styled.div`
   position: absolute;
   top: 70px;
   left: 62px;
-  width: 584px;
-  display: flex;
-  flex-direction: column;
-    justify-content: space-between; // 👈 добавь это
-  background: linear-gradient(90deg, #071237 0%, #000c33 42.55%, #071237 75%);
+  width: 621px;
+  justify-content: space-between; // 👈 добавь это
   gap: 0;
   z-index: 100;
   animation: ${slideDown} 0.5s ease forwards;
 `;
 
 const Row = styled.div`
-  margin-top: 17px;
   display: flex;
   align-items: center;
   justify-content: flex-start; // теперь всё выравнивается слева
@@ -100,33 +91,27 @@ const Row = styled.div`
   position: relative;
 `;
 
-const KomandLogo = styled.img`
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  margin-bottom: 40px;
-  margin-right: 25px;
-  margin-left: 10px;
-`;
-
 const TimeBlock = styled.div`
+  background: linear-gradient(90deg, #071237 0%, #000c33 42.55%, #071237 75%);
+  width: 280px;
+  height: 45px;
+  margin-left: 55px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 13px;
+  gap: 30px;
   padding: 0 10px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
 `;
-
 
 const Time = styled.div`
   font-size: 32px;
-  font-weight: bold;
+  font-weight: 400;
   color: white;
 `;
 const TeamContainer = styled.div<{ side: "left" | "right" }>`
   width: 180px;
   position: relative;
+  background: linear-gradient(90deg, #071237 0%, #000c33 42.55%, #071237 75%);
   display: flex;
   flex-direction: column;
   align-items: ${({ side }) => (side === "left" ? "flex-start" : "flex-end")};
@@ -137,7 +122,7 @@ const TeamContainer = styled.div<{ side: "left" | "right" }>`
 
 const LeftDecoration = styled.img`
   position: absolute;
-  bottom: 26px;
+  bottom: 32px;
   left: 40px;
   height: 8px;
   width: 106px;
@@ -146,30 +131,14 @@ const LeftDecoration = styled.img`
 
 const RightDecoration = styled.img`
   position: absolute;
-  bottom: 26px;
+  bottom: 32px;
   right: 40px;
   height: 8px;
   width: 106px;
   object-fit: cover;
 `;
 
-const TimeDivider = styled.div`
-  width: 4px;
-  height: 48px;
-  background: linear-gradient(
-    to bottom,
-    #002368 0%,
-    #002368 calc(50% - 8px),
-    transparent calc(50% - 8px),
-    transparent calc(50% + 8px),
-    #002368 calc(50% + 8px),
-    #002368 100%
-  );
-`;
-
-
 const TeamBox = styled.div<{ side: "left" | "right" }>`
-  height: 45px;
   width: 155px;
   background: linear-gradient(90deg, #9e6209 0%, #e18e06 50%, #986109 100%);
   display: flex;
@@ -235,6 +204,7 @@ const FoulsRow = styled.div<{ side: "left" | "right" }>`
 
 const FoulCircle = styled.div<{ active: boolean }>`
   margin-top: 6px;
+  margin-bottom: 6px;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -242,25 +212,18 @@ const FoulCircle = styled.div<{ active: boolean }>`
     active
       ? "linear-gradient(144.95deg, #F2071A 16.18%, #860010 84.43%)"
       : "linear-gradient(146.16deg, #0E173F 16.23%, #010920 87.3%)"};
-`;
 
-const Timeoit = styled.div`
-  font-size: 32px;
-  font-weight: 600;
-  color: #ffffff;
-  text-transform: uppercase;
-  text-align: left;
-  padding-left: 31px;
-  height: 45px;
-  display: flex;
-  align-items: center;
+  ${({ active }) =>
+    !active &&
+    `
+box-shadow: inset 1px 1px 4px rgba(255, 255, 255, 0.5);
+    `}
 `;
-
 
 const Driver = styled.div`
   position: absolute;
-  top: -37.8%;
-  left: 69%;
+  top: -45%;
+  left: 71%;
   transform: translateX(-50%);
   width: 4px;
   height: 45px;

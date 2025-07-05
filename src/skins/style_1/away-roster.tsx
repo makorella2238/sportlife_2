@@ -81,13 +81,12 @@ const slideDown = keyframes`
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 95vh;
   background-color: #060f2d;
 
-  animation: ${slideDown} 0.6s ease-out forwards;
+    animation: ${slideDown} 0.6s ease-out forwards;
 `;
 
-// Фон, который всегда на месте
 const BackgroundLayer = styled.div`
   position: fixed; /* или absolute, в зависимости от задачи */
   top: 0;
@@ -109,11 +108,11 @@ const ContentWrapper = styled.div`
 
 const AbsoluteBlock = styled.div`
   position: absolute;
-  top: 51%;
+  top: 54%;
   left: 50%;
   transform: translate(-88%, -50%);
   width: 943px;
-  height: 941px;
+  height: 840px;
   z-index: 3;
   background: url("/bgabloutemid.png") no-repeat center center / cover;
 `;
@@ -138,10 +137,24 @@ const MainBlock = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 1388px;
-  height: 888px;
+  height: 750px;
   background: url("/midbg.png") no-repeat center center / cover;
   box-sizing: border-box;
   z-index: 6;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.05); /* 5% затемнение, т.е. фон на 95% виден */
+    z-index: 1;
+  }
+
+  /* Все содержимое поверх затемнения */
+  > * {
+    position: relative;
+    z-index: 2;
+  }
 `;
 
 const Header = styled.h1`
