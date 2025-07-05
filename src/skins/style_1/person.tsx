@@ -1,8 +1,13 @@
 import { useMatch } from "@/hooks";
 import styled, { keyframes } from "styled-components";
 
-
-export const Person = ({ kind, show }: { kind: "red" | "yellow" | "goal" | "coach" | "judge"; show: boolean }) => {
+export const Person = ({
+  kind,
+  show,
+}: {
+  kind: "red" | "yellow" | "goal" | "coach" | "judge";
+  show: boolean;
+}) => {
   const match = useMatch();
 
   const renderCards = () => {
@@ -13,19 +18,22 @@ export const Person = ({ kind, show }: { kind: "red" | "yellow" | "goal" | "coac
         </CardGroup>
       );
     }
-    if (kind === "yellow" || kind === "goal") {
+    if (kind === "yellow") {
       return (
         <CardGroup side="yellow">
           <Card src={"/yellowCard.png"} alt={`${kind} Card`} />
         </CardGroup>
       );
     }
+    if (kind === "goal") {
+      return <Goal>гооол!</Goal>;
+    }
     return null;
   };
 
   return (
     <Wrapper style={{ display: show ? "flex" : "none" }}>
-            <BackgroundLayer />
+      <BackgroundLayer />
       <TeamBoxWrapper>
         {kind === "goal" && <PersImage src="/persImg.png" alt="Player" />}
         {renderCards()}
@@ -37,14 +45,13 @@ export const Person = ({ kind, show }: { kind: "red" | "yellow" | "goal" | "coac
             </Row>
             <TeamNameLit side="right">{match?.team_1?.name}</TeamNameLit>
           </Col>
-          <Deckor src="bibRightDekor.png"  alt="Deckor"/>
+          <Deckor src="bibRightDekor.png" alt="Deckor" />
         </TeamBox>
         <TeamLogo side="right" src="/comand-1.png" />
       </TeamBoxWrapper>
     </Wrapper>
   );
 };
-
 
 const slideInFromRight = keyframes`
   from {
@@ -72,10 +79,10 @@ const Row = styled.div`
   right: -50px;
   display: flex;
   gap: 16px;
-   width: 510px;
-   padding: 6px 12px;
-   z-index: 10;
-  background: linear-gradient(90deg, #B97800 0%, #E29602 55.5%, #B97802 100%);
+  width: 510px;
+  padding: 6px 12px;
+  z-index: 10;
+  background: linear-gradient(90deg, #b97800 0%, #e29602 55.5%, #b97802 100%);
 `;
 
 const Wrapper = styled.div`
@@ -87,7 +94,7 @@ const Wrapper = styled.div`
 
 const CardGroup = styled.div<{ side: "yellow" | "red" }>`
   position: absolute;
-  left: ${(props) => (props.side === "red" ? "-20px;" : "-20px")}; 
+  left: ${(props) => (props.side === "red" ? "-20px;" : "-20px")};
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -102,6 +109,27 @@ const Card = styled.img`
   object-fit: contain;
 `;
 
+const Goal = styled.div`
+  background: linear-gradient(90deg,rgb(1, 23, 73) 0%,rgb(14, 49, 145) 51%,rgb(3, 27, 90) 100%);
+
+  color: #ffffff;
+  width: 130px;
+  padding: 6px 10px;
+  position: absolute;
+  top: 50%;
+  left: -110px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-family: "Furore", sans-serif;
+  border-radius: 4px;
+
+  /* Скошен левый нижний угол */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 20px 100%);
+  z-index: 999;
+`;
 
 const TeamBoxWrapper = styled.div`
   position: absolute;
@@ -115,18 +143,6 @@ const TeamBoxWrapper = styled.div`
   z-index: 10;
   background: transparent;
 `;
-
-// const YellowBarLeft = styled.div`
-//   position: absolute;
-//   top: 0;
-//   left: 0px;
-//   width: 22px;
-//   border-radius: 12px 0 0 12px;
-//   height: 100%;
-//   background: #ffc70f;
-
-//   z-index: 3;
-// `;
 
 const PersImage = styled.img`
   position: absolute;
@@ -161,7 +177,10 @@ const Deckor = styled.img`
   z-index: 3;
   align-self: center;
 `;
-const TeamBox = styled.div<{ side: "left" | "right"; kind?: "red" | "yellow" | "goal" | "coach" | "judge" }>`
+const TeamBox = styled.div<{
+  side: "left" | "right";
+  kind?: "red" | "yellow" | "goal" | "coach" | "judge";
+}>`
   width: 650px;
   background: #141414;
   position: relative;
@@ -170,7 +189,6 @@ const TeamBox = styled.div<{ side: "left" | "right"; kind?: "red" | "yellow" | "
   align-items: center;
 `;
 
-
 const Col = styled.div`
   display: flex;
   flex-direction: column;
@@ -178,13 +196,13 @@ const Col = styled.div`
   margin-right: 100px;
   align-items: flex-end;
   position: relative; // добавлено
-  height: 100%;        // важно, чтобы позиционировать потомков
+  height: 100%; // важно, чтобы позиционировать потомков
 `;
 
 const TeamName = styled.div<{ side: "left" | "right" }>`
   height: 40px;
   display: flex;
- 
+
   align-items: center;
   font-family: "Furore", sans-serif;
   font-size: 35px;
@@ -196,7 +214,7 @@ const TeamName = styled.div<{ side: "left" | "right" }>`
 
 const TeamNameLit = styled.div<{ side: "left" | "right" }>`
   position: absolute; // добавлено
-  bottom: 6px;          // прижимаем вниз
+  bottom: 6px; // прижимаем вниз
   height: 40px;
   display: flex;
   align-items: center;
@@ -220,4 +238,3 @@ const TeamNameLit = styled.div<{ side: "left" | "right" }>`
         justify-content: flex-end;
       `}
 `;
-
