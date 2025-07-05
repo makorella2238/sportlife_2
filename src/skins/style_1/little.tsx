@@ -96,18 +96,23 @@ const TimeBlock = styled.div`
   width: 280px;
   height: 45px;
   margin-left: 55px;
+  margin-bottom: 40px;
   display: flex;
-  justify-content: center;
+  align-items: center; /* вертикальное центрирование */
+  justify-content: center; /* горизонтальное центрирование */
   gap: 30px;
   padding: 0 10px;
-  margin-bottom: 40px;
 `;
 
 const Time = styled.div`
   font-size: 32px;
   font-weight: 400;
   color: white;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 `;
+
 const TeamContainer = styled.div<{ side: "left" | "right" }>`
   width: 180px;
   position: relative;
