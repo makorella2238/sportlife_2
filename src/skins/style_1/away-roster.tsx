@@ -249,16 +249,33 @@ const NumberBlock = styled.div`
 `;
 
 const NameBlock = styled.div`
-  width: 209px
-  font-weight: 600;
-  font-size: 20px;
-  text-transform: uppercase;
+  width: 209px;
+  font-size: 22px;
+  font-weight: 500;
   color: #fff;
-  margin-left: 12px;
+  text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  flex-grow: 1; /* чтобы занимать максимум доступного места */
+  margin-right: 30px;
+
+  /* Более резкая и короткая маска */
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0) 85%
+  );
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0) 85%
+  );
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
 `;
 
 const LeftImage = styled.img`

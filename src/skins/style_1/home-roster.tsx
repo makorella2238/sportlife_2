@@ -242,7 +242,7 @@ const PlayerBlock = styled.div<{ index: number }>`
 const RightInfo = styled.div`
   display: flex;
   align-items: center;
-  flex-grow: 1;
+  gap: 10px;
   margin-left: 12px;
   justify-content: space-between;
 `;
@@ -262,26 +262,28 @@ const NameBlock = styled.div`
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
-  position: relative;
-  padding-right: 30px;
+  margin-right: 30px;
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 30px;
-    height: 100%;
-    pointer-events: none;
-    background: linear-gradient(
-      to right,
-      rgba(6, 15, 45, 0) 0%,
-      rgba(6, 15, 45, 0.5) 40%,
-      rgba(6, 15, 45, 0.8) 70%,
-      rgba(6, 15, 45, 1) 100%
-    );
-  }
+  /* Более резкая и короткая маска */
+  mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0) 85%
+  );
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 1) 60%,
+    rgba(0, 0, 0, 0.4) 75%,
+    rgba(0, 0, 0, 0) 85%
+  );
+  -webkit-mask-size: 100%;
+  -webkit-mask-repeat: no-repeat;
 `;
+
 
 const LeftImage = styled.img`
   position: absolute;
