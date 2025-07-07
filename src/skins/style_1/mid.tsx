@@ -170,7 +170,7 @@ const Header = styled.h1`
   );
   color: #fff;
   line-height: 62px;
-  margin-bottom: 100px;
+  margin-bottom: 140px;
 `;
 
 const BottomWrapper = styled.div`
@@ -237,7 +237,7 @@ const MatchInfoRow = styled.div`
   justify-content: center;
   align-items: center;
   gap: 40px;
-  margin-top: 110px;
+  margin-top: 90px;
 `;
 
 const MatchBlock = styled.div`

@@ -14,7 +14,7 @@ export const Little = ({ show }: { show: boolean }) => {
     <Wrapper style={{ display: show ? "flex" : "none" }}>
       <Row>
         <TimeBlock>
-          <Logo src="litllogo.png" />
+          <Logo src="litillogo.png" alt="Логотип.png" />
           <Time>2</Time>
           <DriverTime/>
           <Time>26:03</Time>
@@ -168,7 +168,7 @@ const TeamBox = styled.div<{ side: "left" | "right" }>`
 const TeamName = styled.div<{ side: "left" | "right" }>`
   font-weight: 600;
   font-family: "Furore", sans-serif;
-  font-size: 20px;
+  font-size: 32px;
   color: #fff;
   text-transform: uppercase;
   max-width: 80px;
@@ -238,7 +238,7 @@ box-shadow: inset 1px 1px 4px rgba(255, 255, 255, 0.5);
 const Driver = styled.div`
   position: absolute;
   top: -45%;
-  left: 73%;
+  left: 74.5%;
   transform: translateX(-50%);
   width: 4px;
   height: 45px;

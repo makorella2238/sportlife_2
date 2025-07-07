@@ -63,7 +63,7 @@ export const SlideUpDiv = styled.div`
 const Wrapper = styled.div`
   position: absolute;
   bottom: 90px;
-  right: 26%;
+  right: 23%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
