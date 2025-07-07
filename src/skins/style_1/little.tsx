@@ -14,7 +14,9 @@ export const Little = ({ show }: { show: boolean }) => {
     <Wrapper style={{ display: show ? "flex" : "none" }}>
       <Row>
         <TimeBlock>
+          <Logo src="litllogo.png" />
           <Time>2</Time>
+          <DriverTime/>
           <Time>26:03</Time>
         </TimeBlock>
 
@@ -92,6 +94,8 @@ const Row = styled.div`
 `;
 
 const TimeBlock = styled.div`
+position: relative
+;
   background: linear-gradient(90deg, #071237 0%, #000c33 42.55%, #071237 75%);
   width: 280px;
   height: 45px;
@@ -104,8 +108,15 @@ const TimeBlock = styled.div`
   padding: 0 10px;
 `;
 
+const Logo = styled.img`
+  weight: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 2px; /* Отступ между логотипом и временем */
+`;
+
 const Time = styled.div`
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 400;
   color: white;
   margin: 0;
@@ -228,7 +239,7 @@ box-shadow: inset 1px 1px 4px rgba(255, 255, 255, 0.5);
 const Driver = styled.div`
   position: absolute;
   top: -45%;
-  left: 71%;
+  left: 73%;
   transform: translateX(-50%);
   width: 4px;
   height: 45px;
@@ -243,6 +254,28 @@ const Driver = styled.div`
     width: 4px;
     height: 18px;
     background: #fff;
+    transform: translateY(-50%);
+  }
+`;
+
+const DriverTime = styled.div`
+  position: absolute;
+  top: 50%%;
+  left: 52%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 45px;
+  background:#002368;
+  z-index: 15;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 4px;
+    height: 18px;
+background: linear-gradient(90deg, #071237 0%, #000C33 42.55%, #071237 75%);
     transform: translateY(-50%);
   }
 `;

@@ -215,6 +215,7 @@ const TeamName = styled.div`
   font-size: 27px;
   font-weight: 400;
   color: #fff;
+  margin-top: 20px;
   padding: 0 24px;
   text-transform: uppercase;
   text-align: center;
@@ -236,7 +237,7 @@ const MatchInfoRow = styled.div`
   justify-content: center;
   align-items: center;
   gap: 40px;
-  margin-top: 90px;
+  margin-top: 110px;
 `;
 
 const MatchBlock = styled.div`

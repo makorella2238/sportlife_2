@@ -83,8 +83,8 @@ const Wrapper = styled.div`
   width: 100%;
   min-height: 95vh;
   background-color: #060f2d;
+  animation: ${slideDown} 0.6s ease-out forwards;
 
-    animation: ${slideDown} 0.6s ease-out forwards;
 `;
 
 const BackgroundLayer = styled.div`
@@ -108,11 +108,11 @@ const ContentWrapper = styled.div`
 
 const AbsoluteBlock = styled.div`
   position: absolute;
-  top: 54%;
+  top: 52%;
   left: 50%;
   transform: translate(-88%, -50%);
   width: 943px;
-  height: 840px;
+  height: 821px;
   z-index: 3;
   background: url("/bgabloutemid.png") no-repeat center center / cover;
 `;
@@ -155,6 +155,16 @@ const MainBlock = styled.div`
     position: relative;
     z-index: 2;
   }
+
+clip-path: polygon(
+  0% 0%,         /* top-left */
+  0% 100%,       /* bottom-left */
+  0% 100%,      /* center of bottom */
+  100% 90%,      /* middle of right side */
+  100% 0%        /* top-right */
+);
+
+);
 `;
 
 const Header = styled.h1`
