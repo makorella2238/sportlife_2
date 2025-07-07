@@ -168,7 +168,7 @@ const TeamBox = styled.div<{ side: "left" | "right" }>`
 const TeamName = styled.div<{ side: "left" | "right" }>`
   font-weight: 600;
   font-family: "Furore", sans-serif;
-  font-size: 32px;
+  font-size: 36px;
   color: #fff;
   text-transform: uppercase;
   max-width: 80px;
