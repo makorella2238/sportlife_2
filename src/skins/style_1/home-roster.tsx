@@ -194,7 +194,7 @@ const Header = styled.h1`
 
 const BottomWrapper = styled.div`
   position: absolute;
-  bottom: 200px; /* Прижать снизу с отступом */
+  bottom:50px; /* Прижать снизу с отступом */
   left: 20px; /* По левому краю, как у LogoBottom */
   display: flex;
   flex-direction: column;
