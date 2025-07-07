@@ -110,7 +110,7 @@ const ContentWrapper = styled.div`
 const AbsoluteBlock = styled.div`
   position: absolute;
   top: 52%;
-  left: 52%;
+  left: 56%;
   transform: translate(-88%, -50%);
   width: 943px;
   height: 821px;
@@ -135,7 +135,7 @@ const LogoBottom = styled.img`
 const MainBlock = styled.div`
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 54%;
   transform: translate(-50%, -50%);
   width: 1288px;
   height: 750px;
