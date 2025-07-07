@@ -30,7 +30,7 @@ export const AwayRoster = ({ show }: { show: boolean }) => {
 
         <ContentWrapper>
           <GridWrapper>
-             {players.map((player, i) => (
+            {players.map((player, i) => (
               <PlayerBlock key={`player-${i}`} index={i}>
                 <RightInfo>
                   <NumberBlock>{player.player_number}</NumberBlock>
@@ -84,7 +84,6 @@ const Wrapper = styled.div`
   min-height: 95vh;
   background-color: #060f2d;
   animation: ${slideDown} 0.6s ease-out forwards;
-
 `;
 
 const BackgroundLayer = styled.div`
@@ -109,7 +108,7 @@ const ContentWrapper = styled.div`
 const AbsoluteBlock = styled.div`
   position: absolute;
   top: 52%;
-  left: 50%;
+  left: 54%;
   transform: translate(-88%, -50%);
   width: 943px;
   height: 821px;
@@ -121,14 +120,14 @@ const LogoTop = styled.img`
   position: absolute;
   top: 20px;
   left: 20px;
-  max-height: 80px;
+  max-height: 100px;
 `;
 
 const LogoBottom = styled.img`
   position: absolute;
   bottom: 30px;
   left: 20px;
-  max-height: 80px;
+  max-height: 100px;
 `;
 
 const MainBlock = styled.div`
@@ -209,7 +208,7 @@ const LogoText = styled.div`
 `;
 
 const GridWrapper = styled.div`
-width: 951px;
+  width: 951px;
   display: grid;
   grid-template-columns: repeat(3, 293px); /* 3 колонки фиксированной ширины */
   row-gap: 20px; /* отступы между строками */
@@ -332,7 +331,7 @@ const Fio = styled.div`
 const TeamLogo = styled.img`
   position: absolute;
   top: 80px;
-  right: 50px;
+  right: 60px;
   width: 155px;
   height: 182px;
   object-fit: contain;

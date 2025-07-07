@@ -110,7 +110,7 @@ const ContentWrapper = styled.div`
 const AbsoluteBlock = styled.div`
   position: absolute;
   top: 52%;
-  left: 50%;
+  left: 52%;
   transform: translate(-88%, -50%);
   width: 943px;
   height: 821px;
@@ -122,14 +122,14 @@ const LogoTop = styled.img`
   position: absolute;
   top: 20px;
   left: 20px;
-  max-height: 80px;
+  max-height: 100px;
 `;
 
 const LogoBottom = styled.img`
   position: absolute;
   bottom: 30px;
   left: 20px;
-  max-height: 80px;
+  max-height: 100px;
 `;
 
 const MainBlock = styled.div`
@@ -306,7 +306,7 @@ const RightColumn = styled.div`
   font-weight: 600;
   text-transform: uppercase;
   user-select: none;
-  margin-bottom: 40px; /* отступ сверху, чтобы не прилипало к гриду */
+  margin-bottom: 200px; /* отступ сверху, чтобы не прилипало к гриду */
 `;
 
 // Блок каждого текста в правой колонке
@@ -357,7 +357,7 @@ const Fio = styled.div`
 const TeamLogo = styled.img`
   position: absolute;
   top: 80px;
-  right: 50px;
+  right: 105px;
   width: 155px;
   height: 182px;
   object-fit: contain;

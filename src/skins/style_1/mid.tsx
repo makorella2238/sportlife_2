@@ -75,7 +75,6 @@ const pulse = keyframes`
   }
 `;
 
-
 // Фон, который всегда на месте
 const BackgroundLayer = styled.div`
   position: fixed; /* или absolute, в зависимости от задачи */
@@ -114,14 +113,14 @@ const LogoTop = styled.img`
   position: absolute;
   top: 20px;
   left: 20px;
-  max-height: 80px;
+  max-height: 90px;
 `;
 
 const LogoBottom = styled.img`
   position: absolute;
   bottom: 30px;
   left: 20px;
-  max-height: 80px;
+  max-height: 100px;
 `;
 
 const MainBlock = styled.div`
@@ -140,7 +139,12 @@ const MainBlock = styled.div`
     content: "";
     position: absolute;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.05); /* 5% затемнение, т.е. фон на 95% виден */
+    background-color: rgba(
+      0,
+      0,
+      0,
+      0.05
+    ); /* 5% затемнение, т.е. фон на 95% виден */
     z-index: 1;
   }
 
@@ -150,7 +154,6 @@ const MainBlock = styled.div`
     z-index: 2;
   }
 `;
-
 
 const Header = styled.h1`
   font-size: 24px;
@@ -193,7 +196,6 @@ const LogoText = styled.div`
   text-align: center;
 `;
 
-
 const TeamsRow = styled.div`
   display: flex;
   flex-direction: row;
@@ -230,7 +232,6 @@ const TeamLogo = styled.img`
   margin-bottom: 20px;
 
   animation: ${pulse} 2s infinite ease-in-out;
-
 `;
 const MatchInfoRow = styled.div`
   display: flex;
@@ -247,4 +248,3 @@ const MatchBlock = styled.div`
   text-transform: uppercase;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 `;
-

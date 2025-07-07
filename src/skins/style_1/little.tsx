@@ -104,7 +104,7 @@ position: relative
   display: flex;
   align-items: center; /* вертикальное центрирование */
   justify-content: center; /* горизонтальное центрирование */
-  gap: 30px;
+  gap: 20px;
   padding: 0 10px;
 `;
 
@@ -238,7 +238,7 @@ box-shadow: inset 1px 1px 4px rgba(255, 255, 255, 0.5);
 const Driver = styled.div`
   position: absolute;
   top: -45%;
-  left: 74.5%;
+  left: 71.5%;
   transform: translateX(-50%);
   width: 4px;
   height: 45px;
@@ -260,7 +260,7 @@ const Driver = styled.div`
 const DriverTime = styled.div`
   position: absolute;
   top: 50%%;
-  left: 52%;
+  left: 48%;
   transform: translateX(-50%);
   width: 4px;
   height: 45px;
