@@ -136,7 +136,7 @@ const MainBlock = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1388px;
+  width: 1200px;
   height: 750px;
   background: url("/midbg.png") no-repeat center center / cover;
   box-sizing: border-box;
@@ -209,6 +209,7 @@ const LogoText = styled.div`
 `;
 
 const GridWrapper = styled.div`
+width: 951px;
   display: grid;
   grid-template-columns: repeat(3, 293px); /* 3 колонки фиксированной ширины */
   row-gap: 20px; /* отступы между строками */

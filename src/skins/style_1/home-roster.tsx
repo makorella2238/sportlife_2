@@ -137,7 +137,7 @@ const MainBlock = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1388px;
+  width: 1288px;
   height: 750px;
   background: url("/midbg.png") no-repeat center center / cover;
   box-sizing: border-box;
