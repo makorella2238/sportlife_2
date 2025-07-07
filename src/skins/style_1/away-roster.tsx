@@ -199,7 +199,7 @@ const BottomWrapper = styled.div`
 
 const LogoText = styled.div`
   margin-top: 6px;
-  width: 100px; /* или другая нужная ширина */
+  width: 110px; /* или другая нужная ширина */
   margin: 0 auto;
   color: #204abe;
   font-size: 16px;

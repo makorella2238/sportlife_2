@@ -138,7 +138,7 @@ const TeamContainer = styled.div<{ side: "left" | "right" }>`
 const LeftDecoration = styled.img`
   position: absolute;
   bottom: 32px;
-  left: 40px;
+  left: 10px;
   height: 8px;
   width: 106px;
   object-fit: cover;
@@ -147,7 +147,7 @@ const LeftDecoration = styled.img`
 const RightDecoration = styled.img`
   position: absolute;
   bottom: 32px;
-  right: 40px;
+  right: 10px;
   height: 8px;
   width: 106px;
   object-fit: cover;
