@@ -250,7 +250,7 @@ const NumberBlock = styled.div`
 
 const NameBlock = styled.div`
   width: 209px;
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 500;
   color: #fff;
   text-transform: uppercase;
