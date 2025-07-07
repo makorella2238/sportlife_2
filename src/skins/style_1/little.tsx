@@ -112,7 +112,6 @@ const Logo = styled.img`
   weight: 40px;
   height: 40px;
   object-fit: contain;
-  margin-bottom: 2px; /* Отступ между логотипом и временем */
 `;
 
 const Time = styled.div`
